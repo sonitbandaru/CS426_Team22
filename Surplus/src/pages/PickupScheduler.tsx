@@ -1,6 +1,7 @@
-import React from "react";
+
 import AvailabilityList from "../components/Scheduler/AvailabilityList";
-const availableItems = [
+import "../styles/Scheduler/PickupScheduler.css"
+const sampleData = [
     { id: "1", name: "Steak", quantity: 5 },
     { id: "2", name: "Bread", quantity: 10 },
   ];
@@ -12,11 +13,9 @@ const PickupScheduler = () => {
     return (
         <>
         <div className="container">
-            <AvailabilityList items = {availableItems} onBook={handleBooking}/>
+            <AvailabilityList items = {sampleData} onBook={handleBooking}/>
         </div>
         </>
     )
 }
-
 export default PickupScheduler;
-
