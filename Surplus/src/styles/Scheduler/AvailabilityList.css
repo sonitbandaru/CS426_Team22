@@ -1,29 +1,32 @@
 .availability-list-container {
-    margin: 0 auto;
-    max-width: 600px;
-    text-align: center;
-  }
-  
-  .availability-header {
-    font-size: 1.5rem;
-    margin-bottom: 1rem;
-  }
-  
-  .pickup-list-container {
-    padding: 0;
-  }
-  
-  .pickup-list {
-    list-style: none;
-    margin: 0.5rem 0;
-  }
-  
-  .pickup-button {
-    margin-left: 1rem;
-    padding: 0.25rem 0.5rem;
-    cursor: pointer;
-    background-color: #007BFF;
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-  }
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  padding: 1rem;
+  text-align: center;
+  background-color: #232122;
+  justify-content: center;
+}
+
+.availability-list-container h2 {
+  margin-top: 0;
+}
+
+.availability-list-container ul {
+  list-style: none;
+  padding: 0;
+  margin: 1rem 0;
+}
+
+.availability-list-container li {
+  margin: 0.5rem 0;
+}
+
+.availability-list-container button {
+  margin-left: 1rem;
+  padding: 0.25rem 0.5rem;
+  background-color: #87201d;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
