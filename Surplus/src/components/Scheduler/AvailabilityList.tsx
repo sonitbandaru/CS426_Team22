@@ -1,8 +1,9 @@
 import React from "react";
+import "../../styles/Scheduler/AvailabilityList.css"
 interface Item {
     id: string;
     name: string;
-    quantity: number;
+    quantity: number; 
 }
 
 interface AvailabilityListProps {
@@ -12,13 +13,13 @@ interface AvailabilityListProps {
 const AvailabilityList: React.FC<AvailabilityListProps> = ({items, onBook}) => {
     return (
         <>
-        <div>
-            <h2>Available Pickups</h2>
-            <ul>
+        <div className="availability-list-container">
+            <h2 className="availability-header">Available Pickups</h2>
+            <ul className="pickup-list-container">
                 {items.map((item) => (
-                    <li key={item.id}>
+                    <li className="pickup-list" key={item.id}>
                         {item.name} - {item.quantity} available
-                        <button onClick={() => onBook(item.id)}>Book Pickup</button>
+                        <button className="pickup-button"onClick={() => onBook(item.id)}>Book Pickup</button>
                     </li>
                 ))}
             </ul>
