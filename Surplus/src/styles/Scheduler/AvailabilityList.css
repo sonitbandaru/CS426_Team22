@@ -1,0 +1,32 @@
+.availability-list-container {
+  border: 1px solid darkgrey;
+  border-radius: 6px;
+  padding: 1rem;
+  text-align: center;
+  background-color: #232122;
+  justify-content: center;
+}
+
+.availability-list-container h2 {
+  margin-top: 0;
+}
+
+.availability-list-container ul {
+  list-style: none;
+  padding: 0;
+  margin: 1rem 0;
+}
+
+.availability-list-container li {
+  margin: 0.5rem 0;
+}
+
+.availability-list-container button {
+  margin-left: 1rem;
+  padding: 0.25rem 0.5rem;
+  background-color: #87201d;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
