@@ -1,4 +1,4 @@
-export const foodGroups: ('grain' | 'protein' | 'vegetable' | 'fruit' | 'dairy')[] = [
+const foodGroups: string[] = [
     'grain',
     'protein',
     'vegetable',
@@ -6,7 +6,7 @@ export const foodGroups: ('grain' | 'protein' | 'vegetable' | 'fruit' | 'dairy')
     'dairy'
 ];
 
-export const diets: string[] = [
+const diets: string[] = [
     'Keto',
     'Vegan',
     'Gluten-Free',
@@ -25,7 +25,7 @@ export const diets: string[] = [
 ];
   
 
-export const allergies: string[] = [
+const allergies: string[] = [
     'None',
     'Gluten',
     'Dairy',
@@ -43,7 +43,7 @@ export const allergies: string[] = [
     'Milk'
 ];
   
-export const typeOfCuisines: string[] = [
+const typeOfCuisines: string[] = [
     'American',
     'Mexican',
     'Italian',
@@ -66,7 +66,14 @@ export const typeOfCuisines: string[] = [
     'Eastern European'
 ];
   
-export const serves: number[] = [
+const serves: number[] = [
     1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 15, 20
 ];
+
+export const foodGroupsElem = foodGroups.map(foodGroup => <option value={foodGroup}>{foodGroup}</option>)
+export const dietsElem = diets.map(diet => <option value={diet}>{diet}</option>)
+export const allergiesElem = allergies.map(allergy => <option value={allergy}>{allergy}</option>)
+export const typeOfCuisinesElem = typeOfCuisines.map(typeOfCuisine => <option value={typeOfCuisine}>{typeOfCuisine}</option>)
+export const servesElem = serves.map(serve => <option value={serve}>{serve}</option>)
+
   

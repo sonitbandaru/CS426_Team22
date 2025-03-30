@@ -1,15 +1,9 @@
-import { foodGroups, diets, allergies, typeOfCuisines, serves } from "../../database/Categories"
+import { foodGroupsElem, dietsElem, allergiesElem, typeOfCuisinesElem, servesElem } from "../../database/Categories"
 import { meals } from "../../database/Donations"
 import { useState } from "react"
 import MealElem from "./MealElem"
 
 export default function SearchEngine() {
-    const foodGroupsElem = foodGroups.map(foodGroup => <option value={foodGroup}>{foodGroup}</option>)
-    const dietsElem = diets.map(diet => <option value={diet}>{diet}</option>)
-    const allergiesElem = allergies.map(allergy => <option value={allergy}>{allergy}</option>)
-    const typeOfCuisinesElem = typeOfCuisines.map(typeOfCuisine => <option value={typeOfCuisine}>{typeOfCuisine}</option>)
-    const servesElem = serves.map(serve => <option value={serve}>{serve}</option>)
-
     const [filteredMeals, setFilteredMeals] = useState(meals)
 
     const filteredMealsElem = filteredMeals.map(filteredMeal => <MealElem meal={filteredMeal} />)
@@ -17,12 +11,14 @@ export default function SearchEngine() {
     function searchMeal(data: FormData) {
         const search = String(data.get('search')).toLowerCase()
         const foodGroup = String(data.get('foodGroup'))
+        const diet = String(data.get('diet'))
         const allergy = String(data.get('allergy'))
         const typeOfCuisine = String(data.get('typeOfCuisine'))
         const serve = Number(data.get('serve'))
 
         let filtered = meals.filter(meal => search === '' ? true : meal.mealName.toLowerCase().includes(search))
         filtered = filtered.filter(meal => foodGroup === '' ? true : meal.foodGroup === foodGroup)
+        filtered = filtered.filter(meal => diet === '' ? true : meal.diet === diet)
         filtered = filtered.filter(meal => allergy === '' ? true : meal.allergies === allergy)
         filtered = filtered.filter(meal => typeOfCuisine === '' ? true : meal.typeOfCuisine === typeOfCuisine)
         filtered = filtered.filter(meal => serve === 0 ? true : meal.serves === serve)
