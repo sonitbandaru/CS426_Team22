@@ -1,5 +1,5 @@
 import { foodGroups, diets, allergies, typeOfCuisines, serves } from "../../database/Categories"
-import { meals } from "../../database/donations"
+import { meals } from "../../database/Donations"
 import { useState } from "react"
 import MealElem from "./MealElem"
 
@@ -31,42 +31,53 @@ export default function SearchEngine() {
     }
     
     return (
-        <>
+        <section>
             <form action={searchMeal}>
-                <label htmlFor='search'>Search for meal</label>
-                <input type='text' id='search' name='search' defaultValue=''></input>
-                <p>Select categories</p>
                 <div>
-                    <label htmlFor="foodGroup">Food group</label>
-                    <select id='foodGroup' name='foodGroup' defaultValue=''>
-                        <option value=''>-- Choose a food group --</option>
-                        {foodGroupsElem}
-                    </select>
-                    <label htmlFor="diet">Diet</label>
-                    <select id='diet' name='diet' defaultValue=''>
-                        <option value=''>-- Choose a diet --</option>
-                        {dietsElem}
-                    </select>
-                    <label htmlFor="allergy">Allergy</label>
-                    <select id='allergy' name='allergy' defaultValue=''>
-                        <option value=''>-- Choose an allergy --</option>
-                        {allergiesElem}
-                    </select>
-                    <label htmlFor="typeOfCuisine">Type of cuisine</label>
-                    <select id='typeOfCuisine' name='typeOfCuisine' defaultValue=''>
-                        <option value=''>-- Choose a type of cuisine --</option>
-                        {typeOfCuisinesElem}
-                    </select>
-                    <label htmlFor="serve">Serves</label>
-                    <select id='serve' name='serve' defaultValue=''>
-                        <option value={0}>-- Choose a number of servings --</option>
-                        {servesElem}
-                    </select>
+                    <label htmlFor='search'>Search for meal</label>
+                    <input type='text' id='search' name='search' defaultValue=''></input>
+                </div>
+                <div className="categories">
+                    <div>
+                        <label htmlFor="foodGroup">Food group</label>
+                        <select id='foodGroup' name='foodGroup' defaultValue=''>
+                            <option value=''>-- Choose a food group --</option>
+                            {foodGroupsElem}
+                        </select>
+                    </div>
+                    <div>
+                        <label htmlFor="diet">Diet</label>
+                        <select id='diet' name='diet' defaultValue=''>
+                            <option value=''>-- Choose a diet --</option>
+                            {dietsElem}
+                        </select>
+                    </div>
+                    <div>
+                        <label htmlFor="allergy">Allergy</label>
+                        <select id='allergy' name='allergy' defaultValue=''>
+                            <option value=''>-- Choose an allergy --</option>
+                            {allergiesElem}
+                        </select>
+                    </div>
+                    <div>
+                        <label htmlFor="typeOfCuisine">Type of cuisine</label>
+                        <select id='typeOfCuisine' name='typeOfCuisine' defaultValue=''>
+                            <option value=''>-- Choose a type of cuisine --</option>
+                            {typeOfCuisinesElem}
+                        </select>
+                    </div>
+                    <div>
+                        <label htmlFor="serve">Serves</label>
+                        <select id='serve' name='serve' defaultValue=''>
+                            <option value={0}>-- Choose a number of servings --</option>
+                            {servesElem}
+                        </select>
+                    </div>
                 </div>
                 <button>Search</button>
             </form>
 
             {filteredMealsElem}
-        </>
+        </section>
     )
 }
