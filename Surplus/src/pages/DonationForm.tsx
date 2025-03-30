@@ -1,5 +1,6 @@
 import { foodGroupsElem, dietsElem, allergiesElem, typeOfCuisinesElem, servesElem } from "../database/Categories"
 import { meals } from "../database/Donations"
+import "../styles/DonationForm.css"; 
 
 function addMeal(data: FormData) {
     // Also add image eventually with backend implementation
