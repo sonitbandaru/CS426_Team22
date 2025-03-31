@@ -1,14 +1,32 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+  
 form {
+    max-width: 600px;
+    margin: 2rem auto;
+}
+  
+form > div:not(.categories) {
     display: flex;
-    flex-direction: column;
     align-items: center;
+    margin-bottom: 1rem;
+}
+  
+form > div:not(.categories) label {
+    width: 150px;
+    margin-right: 1rem;
+    text-align: right;
 }
 
-select, input {
-    margin: 1em 2em 1em 0.5em;
-    padding: 10px;
-    font-size: 16px;
-    font-family: "Noto Sans";
+input,
+select {
+    width: 250px; 
+    max-width: 100%;
+    padding: 0.5rem;
+    font-size: 1rem;
     border: 2px solid #333;
     border-radius: 5px;
 }
@@ -16,11 +34,29 @@ select, input {
 .categories {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: repeat(3, auto);
-    gap: 10px;
-    justify-items: left;
+    gap: 1rem;
+    margin-bottom: 1rem;
 }
-
+  
+.categories > div {
+    display: flex;
+    align-items: center;
+}
+  
+.categories > div label {
+    width: 150px;
+    margin-right: 1rem;
+    text-align: right;
+}
+  
+.categories > div select {
+    width: 250px; 
+    max-width: 100%;
+    padding: 0.5rem;
+    font-size: 1rem;
+    border: 2px solid #333;
+    border-radius: 5px;
+}
 .meal {
     display: grid;
     grid-template-columns: 1fr 2fr 1fr;
@@ -31,3 +67,4 @@ select, input {
     border: 2px solid #333;
     align-items: center;
 }
+  
