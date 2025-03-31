@@ -26,4 +26,37 @@
     left: 0;
     z-index: -1;
   }
+  .quick-access {
+    padding: 2rem;
+    background-color: #f9f9f9;
+    text-align: center;
+  }
+  
+  .quick-access h2 {
+    font-size: 1.8rem;
+    margin-bottom: 1.2rem;
+    color: #87201d;
+  }
+  
+  .quick-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+  
+  .quick-buttons button {
+    background-color: #87201d;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .quick-buttons button:hover {
+    background-color: #a93226;
+  }
   
