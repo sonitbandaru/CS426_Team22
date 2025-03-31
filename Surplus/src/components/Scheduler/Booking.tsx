@@ -20,7 +20,6 @@ const Booking: React.FC<BookingProps> = ({ availableSlots, itemId, onConfirm, on
   return (
     <div className="booking-modal">
       <div className="booking-modal-content">
-        {/* Optional Close Button */}
         <span className="booking-modal-close" onClick={onClose}>
           &times;
         </span>
