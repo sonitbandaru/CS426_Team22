@@ -1,88 +1,59 @@
 import React, { useEffect, useState } from "react";
 
 const ImpactCounter = () => {
-  const [peopleServed, setPeopleServed] = useState(0);
-  const [foodSaved, setFoodSaved] = useState(0);
-
-  // Simple animation effect
+  const [people, setPeople] = useState(0);
+  const [food, setFood] = useState(0);
+//creates a cool animation to count up the number of people served and food saved
   useEffect(() => {
-    const serveTarget = 1243;
-    const foodTarget = 3219;
-
-    const serveInterval = setInterval(() => {
-      setPeopleServed(prev => {
-        if (prev < serveTarget) return prev + 11;
-        clearInterval(serveInterval);
-        return serveTarget;
+    const peopleTarget = 6243;
+    const foodTarget = 13219;
+    //set initial values for the counters
+    const peopleInterval = setInterval(() => {
+      setPeople((prev) => {
+        if (prev < peopleTarget) return prev + 10;
+        clearInterval(peopleInterval);
+        return peopleTarget;
       });
     }, 10);
-
     const foodInterval = setInterval(() => {
-      setFoodSaved(prev => {
-        if (prev < foodTarget) return prev + 17;
+      setFood((prev) => {
+        if (prev < foodTarget) return prev + 15;
         clearInterval(foodInterval);
         return foodTarget;
       });
     }, 10);
 
     return () => {
-      clearInterval(serveInterval);
+      clearInterval(peopleInterval);
       clearInterval(foodInterval);
     };
   }, []);
 
   return (
-    <section style={styles.container}>
-      <h2 style={styles.heading}>Our Impact</h2>
-      <div style={styles.widgetRow}>
-        <div style={styles.widgetCard}>
-          <span style={styles.icon}>🧍‍♂️</span>
-          <h3 style={styles.number}>{peopleServed}</h3>
+    <div style={{padding: "20px", backgroundColor: "#f4f4f4"}}>
+      <h2>Our Impact</h2>
+      <div style={{ display: "flex", justifyContent: "center", gap: "20px", flexWrap: "wrap" }}>
+        <div style={{
+          backgroundColor: "white",
+          borderRadius: "8px",
+          padding: "10px",
+          width: "120px",
+        }}>
+          <h3>{people}</h3>
           <p>People Served</p>
         </div>
-        <div style={styles.widgetCard}>
-          <span style={styles.icon}>🗑️</span>
-          <h3 style={styles.number}>{foodSaved.toLocaleString()} lbs</h3>
+        <div style={{
+          backgroundColor: "white",
+          borderRadius: "8px",
+          padding: "10px",
+          width: "120px",
+        }}>
+          <h3>{food} lbs</h3>
           <p>Food Saved</p>
         </div>
       </div>
-    </section>
+    </div>
   );
-};
-
-const styles: { [key: string]: React.CSSProperties } = {
-  container: {
-    padding: "2rem",
-    backgroundColor: "#f4f4f4",
-    textAlign: "center",
-  },
-  heading: {
-    fontSize: "1.8rem",
-    color: "#87201d",
-    marginBottom: "1.5rem",
-  },
-  widgetRow: {
-    display: "flex",
-    justifyContent: "center",
-    gap: "2rem",
-    flexWrap: "wrap",
-  },
-  widgetCard: {
-    backgroundColor: "white",
-    borderRadius: "10px",
-    padding: "1.5rem",
-    width: "180px",
-    boxShadow: "0 2px 10px rgba(0,0,0,0.1)",
-  },
-  icon: {
-    fontSize: "2rem",
-  },
-  number: {
-    fontSize: "2rem",
-    margin: "0.5rem 0",
-    fontWeight: "bold",
-    color: "#333",
-  },
 };
 
 export default ImpactCounter;
