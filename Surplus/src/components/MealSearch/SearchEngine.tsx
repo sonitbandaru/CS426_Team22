@@ -6,7 +6,7 @@ import MealElem from "./MealElem"
 export default function SearchEngine() {
     const [filteredMeals, setFilteredMeals] = useState(meals)
 
-    const filteredMealsElem = filteredMeals.map(filteredMeal => <MealElem meal={filteredMeal} />)
+    const filteredMealsElem = filteredMeals.map(filteredMeal => <MealElem meal={filteredMeal} cart={false} />)
 
     function searchMeal(data: FormData) {
         const search = String(data.get('search')).toLowerCase()

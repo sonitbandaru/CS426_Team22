@@ -1,7 +1,20 @@
 import { Meal } from "../../database/Donations"
+import { useContext } from "react"
+import { UserContext } from "../../UserContext"
 
-export default function MealElem(props: {meal: Meal}) {
+export default function MealElem(props: {meal: Meal, cart: boolean}) {
     const meal = props.meal
+
+    const {addMeal, removeMeal} = useContext(UserContext)
+
+    function changeMeal(currMeal: Meal) {
+        if (props.cart) {
+            removeMeal(currMeal)
+        } else {
+            addMeal(currMeal)
+        }
+    }
+
     return (
         <section className="meal">
             <div>
@@ -14,7 +27,7 @@ export default function MealElem(props: {meal: Meal}) {
                 <p>{meal.typeOfCuisine} - {meal.serves}</p>
             </div>
             <div>
-                <button type='button'>Add to Cart</button>
+                <button type='button' onClick={() => changeMeal(meal)}>{props.cart ? "Remove from Cart" : "Add to Cart"}</button>
             </div>
         </section>
     )
