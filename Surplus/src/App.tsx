@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Navbar from "./components/HomePage/Navbar";
+import Footer from "./components/HomePage/Footer";
 import HomePage from "./pages/HomePage";
 import PickupScheduler from "./pages/PickupScheduler";
 import DonationForm from "./pages/DonationForm";
@@ -22,6 +23,7 @@ function App() {
           {/*<Route path="/donation-form" element={<DonationForm />} />
           <Route path="/account-home" element={<Account />} />*/}
         </Routes>
+        <Footer />
       </Router>
     </UserProvider>
   );
