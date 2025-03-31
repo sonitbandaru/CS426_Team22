@@ -6,7 +6,8 @@
     display: flex;
     flex-wrap: wrap;  
     gap: 20px;
-    justify-content: space-around;     
+    justify-content: space-evenly; 
+    align-items: center;
     box-sizing: border-box;
 }
   
@@ -14,9 +15,8 @@
     color: white;
     text-decoration: none;
     font-weight: bold;
-    padding: 0.25rem 0.5rem; 
+    padding: 0.25rem 0.5rem;
 }
-  
 .nav-link:hover {
     text-decoration: underline;
 }
