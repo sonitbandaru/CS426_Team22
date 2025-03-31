@@ -9,9 +9,9 @@ export default function MealElem(props: {meal: Meal}) {
             </div>
             <div>
                 <p>{meal.mealName}</p>
-                <p>{meal.donor} - {meal.donorRating}</p>
+                <p>{meal.donor}</p>
                 <p>{meal.foodGroup} - {meal.diet} - {meal.allergies}</p>
-                <p>{meal.healthyScore} - {meal.typeOfCuisine} - {meal.serves}</p>
+                <p>{meal.typeOfCuisine} - {meal.serves}</p>
             </div>
             <div>
                 <button type='button'>Add to Cart</button>
