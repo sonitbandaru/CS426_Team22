@@ -5,6 +5,9 @@ import HomePage from "./pages/HomePage";
 import PickupScheduler from "./pages/PickupScheduler";
 
 import LoginPage from "./pages/LoginPage";
+import ResetPassword from "./pages/ResetPassword";
+import SignupPage from "./pages/SignupPage";
+
 
 
 //import DonationForm from "./pages/DonationForm";
@@ -19,6 +22,9 @@ function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/pickup-scheduler" element={<PickupScheduler />} />
         <Route path="/login" element={<LoginPage />} />
+        <Route path="/reset-password" element={<ResetPassword />} />
+        <Route path="/signup" element={<SignupPage />} />
+
 
         {/*<Route path="/donation-form" element={<DonationForm />} />
         <Route path="/meal-search" element={<MealSearch />} />
