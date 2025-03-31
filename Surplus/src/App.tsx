@@ -7,6 +7,10 @@ import MealSearch from "./pages/MealSearch";
 import ShoppingCart from "./pages/ShoppingCart";
 import UserProvider from "./UserContext";
 //import AccountHome from "./pages/Account";
+import LoginPage from "./pages/LoginPage";
+import ResetPassword from "./pages/ResetPassword";
+import SignupPage from "./pages/SignupPage";
+
 
 function App() {
   return (
@@ -14,7 +18,11 @@ function App() {
       <Router>
         <Navbar />
         <Routes>
+          <Route path="/" element={<LoginPage />} />
           <Route path="/" element={<HomePage />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/reset-password" element={<ResetPassword />} />
+          <Route path="/signup" element={<SignupPage />} />
           <Route path="/pickup-scheduler" element={<PickupScheduler />} />
           <Route path="/meal-search" element={<MealSearch />} />
           <Route path="/donation-form" element={<DonationForm />} />
