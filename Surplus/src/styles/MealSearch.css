@@ -1,0 +1,33 @@
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+select, input {
+    margin: 1em 2em 1em 0.5em;
+    padding: 10px;
+    font-size: 16px;
+    font-family: "Noto Sans";
+    border: 2px solid #333;
+    border-radius: 5px;
+}
+
+.categories {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(3, auto);
+    gap: 10px;
+    justify-items: left;
+}
+
+.meal {
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
+    background-color: #9b755c;
+    padding: 3px;
+    margin: 10px;
+    border-radius: 5px;
+    border: 2px solid #333;
+    align-items: center;
+}
