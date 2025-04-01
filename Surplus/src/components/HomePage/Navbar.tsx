@@ -13,9 +13,6 @@ const Navbar = () => {
         <Link to="/donation-form" className="nav-link">Donation Form</Link>
         <Link to="/meal-search" className="nav-link">Meal Search</Link>
         <Link to="/account-home" className="nav-link">Account Home</Link>
-      </div>
-
-      <div className="nav-user">
         {email ? (
           <span className="user-email">Logged in as: {email}</span>
         ) : (
