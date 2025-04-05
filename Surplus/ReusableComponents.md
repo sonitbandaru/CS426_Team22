@@ -28,7 +28,7 @@ Props and expected data types
 - useNavigate() – Navigation hook from React Router to redirect users after login
 
 
-**MealELem**
+**MealElem**
 
 - The MealElem component takes in information about the meal in a Meal object and a boolean indicating when it is going in the shopping cart
 - Uses context for adding and removing itself from the state which contains meals in shopping cart
