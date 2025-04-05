@@ -27,7 +27,9 @@ export default function MealElem(props: {meal: Meal, cart: boolean}) {
                 <p>{meal.typeOfCuisine} - {meal.serves}</p>
             </div>
             <div>
-                <button type='button' onClick={() => changeMeal(meal)}>{props.cart ? "Remove from Cart" : "Add to Cart"}</button>
+                <button type='button' onClick={() => changeMeal(meal)}>
+                {props.cart ? "Remove from Cart" : "Add to Cart"}\
+                </button>
             </div>
         </section>
     )
