@@ -1,4 +1,5 @@
 //src/utils/registry.test.ts
+//This file is used to test the registry.ts file
 import express from 'express';
 import { registerService, lookupService, setRegistryUrl } from './registry';
 
