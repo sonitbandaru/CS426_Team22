@@ -1,5 +1,5 @@
 // src/utils/mockRegistry.ts
-//run this files by using the command npx ts-node src/utils/mockRegistry.ts
+//run this file by using the command npx ts-node src/utils/mockRegistry.ts
 import express from 'express';
 
 
