@@ -6,7 +6,8 @@ import MealElem from "./MealElem"
 const MEAL_SERVICE_URL = "http://localhost:3000/"
 
 export default function SearchEngine() {
-    const [filteredMeals, setFilteredMeals] = useState(meals)
+
+    const [filteredMeals, setFilteredMeals] = useState([])
 
     const filteredMealsElem = filteredMeals.map(filteredMeal => <MealElem meal={filteredMeal} cart={false} />)
 

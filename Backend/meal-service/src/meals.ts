@@ -1,15 +1,4 @@
-export interface Meal {
-    image: string;
-    mealName: string;
-    donor: string;
-    foodGroup: string;
-    diet: string;
-    allergies: string;
-    typeOfCuisine: string;
-    serves: number;
-}
-  
-export const meals: Meal[] = [
+export const meals = [
     {
       image: "",
       mealName: "Chicken Salad",

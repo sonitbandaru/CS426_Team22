@@ -4,6 +4,7 @@ import { Pool } from 'pg';
 import dotenv from 'dotenv';
 import { pino } from 'pino';
 import cors from 'cors';
+import { meals } from './meals.js';
 
 dotenv.config();
 const PORT = 3000;
@@ -17,6 +18,21 @@ app.use(express.json());
 const pool = new Pool({
     connectionString: process.env.DATABASE_URL
 })
+
+for (let i = 0; i < meals.length; i++) {
+    const { image, mealName, donor, foodGroup, diet, allergies, typeOfCuisine, serves } = meals[i];
+    try { 
+        await pool.query(
+            `INSERT INTO mealdb (image, mealName, donor, foodGroup, diet, allergies, typeOfCuisine, serves)
+            VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
+            RETURNING *`,
+            [image, mealName, donor, foodGroup, diet, allergies, typeOfCuisine, serves]
+        );
+        log.info(`Starter meal ${mealName} stored.`);
+    } catch (err) {
+        log.error(`Starter meal ${mealName} not stored.`);
+    }
+}
 
 // const redisCli = createClient()
 
