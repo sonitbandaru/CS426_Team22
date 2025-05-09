@@ -1,5 +1,4 @@
 import express from 'express';
-// import { createClient } from 'redis';
 import { Pool } from 'pg';
 import dotenv from 'dotenv';
 import { pino } from 'pino';
@@ -21,7 +20,8 @@ const pool = new Pool({
 
 for (let i = 0; i < meals.length; i++) {
     const { image, mealName, donor, foodGroup, diet, allergies, typeOfCuisine, serves } = meals[i];
-    try { 
+    log.info(`Trying to store starter meal ${mealName}.`);
+    try {
         await pool.query(
             `INSERT INTO mealdb (image, mealName, donor, foodGroup, diet, allergies, typeOfCuisine, serves)
             VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
@@ -34,14 +34,9 @@ for (let i = 0; i < meals.length; i++) {
     }
 }
 
-// const redisCli = createClient()
-
-// redisCli.on('error', (err) => console.log('Redis Client Error', err));
-
-// await redisCli.connect();
-
 app.post('/', async (req, res) => {
     const { image, mealName, donor, foodGroup, diet, allergies, typeOfCuisine, serves } = req.body;
+    log.info(`Trying to store meal ${mealName}`); 
     try { 
         await pool.query(
             `INSERT INTO mealdb (image, mealName, donor, foodGroup, diet, allergies, typeOfCuisine, serves)
@@ -52,37 +47,10 @@ app.post('/', async (req, res) => {
         log.info(`${mealName} stored.`);
         res.status(201).json({ message: `${mealName} stored.`});
     } catch (err) {
-        log.error(`${mealName} not stored.`)
-        res.status(500).json({ message: `${mealName} not stored.`})
+        log.error(`${mealName} not stored.`);
+        res.status(500).json({ message: `${mealName} not stored.`});
     }
 });
-  
-// app.post('/', async (req, res) => {
-//     const newMeal = req.body;
-//     const newMealKey = newMeal.mealName;
-
-//     try {
-//         await redisCli.json.set(newMealKey, '$', newMeal);
-//         log.info(`${newMealKey} stored.`);
-//         res.status(201).json({ message: `${newMealKey} stored.`});
-//     } catch (err) {
-//         log.error(`${newMealKey} not stored.`)
-//         res.status(500).json({ message: `${newMealKey} not stored.`})
-//     }
-// });
-
-
-// await redisCli.ft.create('idx:meal', {
-//     '$.mealName': { type: 'TEXT', AS: 'mealName'},
-//     '$.foodGroup': { type: 'TEXT', AS: 'foodGroup'},
-//     '$.diet': { type: 'TEXT', AS: 'diet'},
-//     '$.allergies': { type: 'TEXT', AS: 'allergies'},
-//     '$.typeOfCuisine': { type: 'TEXT', AS: 'typeOfCuisine'},
-//     '$.serves': { type: 'TEXT', AS: 'serves'}
-// }, {
-//     ON: 'JSON',
-//     PREFIX: '*'
-// });
 
 app.get('/', async (req, res) => {
     const { mealName, foodGroup, diet, allergies, typeOfCuisine, serves } = req.query;
@@ -111,47 +79,20 @@ app.get('/', async (req, res) => {
     }
 
     const where = filters.length ? `WHERE ${filters.join(' AND ')}` : '';
+    log.info(`Try to search for meals ${where}.`);
     try {
-
         const response = await pool.query(
             `SELECT image, mealName AS "mealName", donor, foodGroup AS "foodGroup", 
             diet, allergies, typeOfCuisine AS "typeOfCuisine", serves FROM mealdb ${where}`,
             values
         );
+        log.info(`Search successful.`);
         res.status(201).json(response.rows);
     } catch (err) {
-        log.error(`Search not successful.`)
-        res.status(500).json({ message: `Search not successful.`})
+        log.error(`Search not successful.`);
+        res.status(500).json({ message: `Search not successful.`});
     }
 })
-
-// app.get('/', async (req, res) => {
-//     try {
-//         const { mealName, foodGroup, diet, allergies, typeOfCuisine, serves} = req.body;
-
-//         let query = '';
-//         if (mealName) query += `@mealName:*${mealName}*`;
-//         if (foodGroup) query += `@foodGroup:${foodGroup}`;
-//         if (diet) query += `@diet:${diet}`;
-//         if (allergies) query += `@allergies:${allergies}`;
-//         if (typeOfCuisine) query += `@typeOfCuisine:${typeOfCuisine}`;
-//         if (serves) query += `@serves:[${serves} ${serves}]`;
-
-//         const matches = await redisCli.ft.search('idx:meal', query.trim());
-//         const typedMatches = matches as { total: number; documents: { id: string; value: Record<string, string | number | boolean | null> }[] };
-//         const matchesJSON = typedMatches.documents.map(meal => meal.value);
-
-//         if (matchesJSON.length == 0) {
-//             log.info(`No matches found.`);
-//         } else {
-//             log.info(`${matchesJSON.length} matches found.`)
-//         }
-//         res.status(201).json(matchesJSON);
-//     } catch (err) {
-//         log.error(`Search not successful.`)
-//         res.status(500).json({ message: `Search not successful.`})
-//     }
-// });
 
 
 app.listen(PORT, () => {

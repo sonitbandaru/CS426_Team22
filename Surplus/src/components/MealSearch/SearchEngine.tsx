@@ -1,5 +1,4 @@
 import { foodGroupsElem, dietsElem, allergiesElem, typeOfCuisinesElem, servesElem } from "../../database/Categories"
-import { Meal, meals } from "../../database/Donations"
 import { useState } from "react"
 import MealElem from "./MealElem"
 
@@ -29,16 +28,8 @@ export default function SearchEngine() {
         if (!getMealRes.ok) {
             alert(`Search not successful. Try again.`)
         } else {
-            filtered = await getMealRes.json();
-          
+            filtered = await getMealRes.json()
         }
-
-        // let filtered = meals.filter(meal => search === '' ? true : meal.mealName.toLowerCase().includes(search))
-        // filtered = filtered.filter(meal => foodGroup === '' ? true : meal.foodGroup === foodGroup)
-        // filtered = filtered.filter(meal => diet === '' ? true : meal.diet === diet)
-        // filtered = filtered.filter(meal => allergy === '' ? true : meal.allergies === allergy)
-        // filtered = filtered.filter(meal => typeOfCuisine === '' ? true : meal.typeOfCuisine === typeOfCuisine)
-        // filtered = filtered.filter(meal => serve === 0 ? true : meal.serves === serve)
 
         setFilteredMeals(filtered)
     }
