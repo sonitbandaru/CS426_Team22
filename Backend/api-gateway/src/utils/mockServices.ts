@@ -1,4 +1,5 @@
 //created this to test mockservices
+//This basically makes a mock service so I can test the API gateway before our microservices are ready
 import express from 'express';
 
 const createService = (port: number, name: string) => {
