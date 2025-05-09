@@ -1,3 +1,6 @@
+//run ts-node src/utils/registerMicroservices.ts to register the microservices with the API Gateway
+//shortcut script to manually register services
+//in the future, this will be done automatically by the microservices themselves
 import { registerService } from './registry';
 (async () =>{
     console.log("Registering Microservices...");
