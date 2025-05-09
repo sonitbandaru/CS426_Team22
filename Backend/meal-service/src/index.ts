@@ -7,7 +7,6 @@ import cors from 'cors';
 
 dotenv.config();
 const PORT = 3000;
-const MEAL_DATABASE_URL = 'postgresql://mealservice:password@localhost:5433/mealdb';
 
 const log = pino({ transport: { target: "pino-pretty" } });
 
@@ -16,7 +15,7 @@ app.use(cors());
 app.use(express.json());
 
 const pool = new Pool({
-    connectionString: MEAL_DATABASE_URL
+    connectionString: process.env.DATABASE_URL
 })
 
 // const redisCli = createClient()
