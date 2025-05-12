@@ -1,107 +1,157 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import AvailabilityList from "../components/Scheduler/AvailabilityList";
 import Booking from "../components/Scheduler/Booking";
 import "../styles/Scheduler/PickupScheduler.css";
 
-const PickupScheduler = () => {
-  const [items, setItems] = useState([
-    { id: "1", name: "Steak", quantity: 5 },
-    { id: "2", name: "Bread", quantity: 10 },
-    { id: "3", name: "Eggs", quantity: 5 },
-    { id: "4", name: "Cake", quantity: 10 },
-    { id: "5", name: "Soda", quantity: 5 },
-    { id: "6", name: "Stirfry", quantity: 10 },
-    { id: "7", name: "Chicken Roast", quantity: 5 },
-    { id: "8", name: "Tikka Massala", quantity: 10 },
-    { id: "9", name: "Mushroom Soup", quantity: 5 },
-    { id: "10", name: "Sourdough", quantity: 10 },
-  ]);
+type Item = { id: string; name: string; quantity: number };
+type BookingType = {
+  id: string;
+  itemId?: string;
+  name: string;
+  quantity: number;
+  pickupTime: string;
+};
 
+export default function PickupScheduler() {
+  const [items, setItems] = useState<Item[]>([]);
+  const [pendingPickups, setPendingPickups] = useState<BookingType[]>([]);
+  const [completedPickups, setCompletedPickups] = useState<BookingType[]>([]);
   const [selectedItemId, setSelectedItemId] = useState<string | null>(null);
+  const [newName, setNewName] = useState("");
+  const [newQty, setNewQty] = useState<number>(0);
 
-  // Pending & completed states
-  const [pendingPickups, setPendingPickups] = useState<
-    { id: string; name: string; quantity: number; pickupTime: string }[]
-  >([]);
-  const [completedPickups, setCompletedPickups] = useState<
-    { id: string; name: string; quantity: number; pickupTime: string }[]
-  >([]);
+  useEffect(() => {
+    fetch("http://localhost:4000/items")
+      .then(r => r.json())
+      .then(setItems);
+    fetch("http://localhost:4000/pending")
+      .then(r => r.json())
+      .then(setPendingPickups);
+    fetch("http://localhost:4000/completed")
+      .then(r => r.json())
+      .then(setCompletedPickups);
+  }, []);
+
+  const handleAddItem = (e: React.FormEvent) => {
+    e.preventDefault();
+    fetch("http://localhost:4000/items", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ name: newName, quantity: newQty })
+    })
+      .then(r => r.json())
+      .then(item => {
+        setItems(prev => [...prev, item]);
+        setNewName("");
+        setNewQty(0);
+      })
+      .catch(console.error);
+  };
 
   const handleBooking = (id: string) => {
     setSelectedItemId(id);
+  };
+
+  const handleBookingConfirmation = (itemId: string, pickupTime: string) => {
+    fetch("http://localhost:4000/book", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ itemId, pickupTime })
+    })
+      .then(r => r.json())
+      .then(booking => {
+        setItems(i => i.filter(x => x.id !== itemId));
+        setPendingPickups(p => [...p, booking]);
+        setSelectedItemId(null);
+      })
+      .catch(console.error);
   };
 
   const handleCloseBooking = () => {
     setSelectedItemId(null);
   };
 
-  const handleBookingConfirmation = (itemId: string, pickupTime: string) => {
-    console.log(`Booking confirmed for item ${itemId} at ${pickupTime}`);
-    const bookedItem = items.find((item) => item.id === itemId);
-    if (bookedItem) {
-      setPendingPickups((prev) => [...prev, { ...bookedItem, pickupTime }]);
-    }
-    setItems((prevItems) => prevItems.filter((item) => item.id !== itemId));
-    handleCloseBooking();
-  };
-
-  const handleCompletePickup = (itemId: string) => {
-    const pending = pendingPickups.find((pickup) => pickup.id === itemId);
-    if (pending) {
-      setPendingPickups((prev) => prev.filter((pickup) => pickup.id !== itemId));
-      setCompletedPickups((prev) => [...prev, pending]);
-    }
+  const handleCompletePickup = (bookingId: string) => {
+    fetch("http://localhost:4000/complete", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ bookingId })
+    })
+      .then(r => r.json())
+      .then(completed => {
+        setPendingPickups(p => p.filter(x => x.id !== bookingId));
+        setCompletedPickups(c => [...c, completed]);
+      })
+      .catch(console.error);
   };
 
   return (
-    <div className="container">
-      {/* Column 1: Available Pickups */}
-      <div className="column">
-        <AvailabilityList items={items} onBook={handleBooking} />
-        {selectedItemId && (
-          <Booking
-            itemId={selectedItemId}
-            onClose={handleCloseBooking}
-            onConfirm={handleBookingConfirmation}
-            availableSlots={["10:00 AM", "11:00 AM", "12:00 PM"]}
-          />
-        )}
-      </div>
+    <>
+      <form onSubmit={handleAddItem} style={{ marginBottom: "1rem" }}>
+        <input
+          type="text"
+          placeholder="Item name"
+          value={newName}
+          onChange={e => setNewName(e.target.value)}
+          required
+        />
+        <input
+          type="number"
+          placeholder="Quantity"
+          value={newQty}
+          onChange={e => setNewQty(+e.target.value)}
+          required
+          min={1}
+        />
+        <button type="submit">Add Item</button>
+      </form>
 
-      <div className="column pending-column">
-        <h2>Pending Pickups</h2>
-        {pendingPickups.length === 0 ? (
-          <p>No pending pickups</p>
-        ) : (
-          <ul>
-            {pendingPickups.map((pickup) => (
-              <li key={pickup.id}>
-                {pickup.name} - {pickup.pickupTime}{" "}
-                <button onClick={() => handleCompletePickup(pickup.id)}>
-                  Complete
-                </button>
-              </li>
-            ))}
-          </ul>
-        )}
-      </div>
+      <div className="container">
+        <div className="column">
+          <AvailabilityList items={items} onBook={handleBooking} />
+          {selectedItemId && (
+            <Booking
+              itemId={selectedItemId}
+              onClose={handleCloseBooking}
+              onConfirm={handleBookingConfirmation}
+              availableSlots={["10:00 AM", "11:00 AM", "12:00 PM"]}
+            />
+          )}
+        </div>
 
-      <div className="column completed-column">
-        <h2>Completed Pickups</h2>
-        {completedPickups.length === 0 ? (
-          <p>No completed pickups</p>
-        ) : (
-          <ul>
-            {completedPickups.map((pickup) => (
-              <li key={pickup.id}>
-                {pickup.name} - {pickup.pickupTime}
-              </li>
-            ))}
-          </ul>
-        )}
+        <div className="column pending-column">
+          <h2>Pending Pickups</h2>
+          {pendingPickups.length === 0 ? (
+            <p>No pending pickups</p>
+          ) : (
+            <ul>
+              {pendingPickups.map(p => (
+                <li key={p.id}>
+                  {p.name} – {p.pickupTime}{" "}
+                  <button onClick={() => handleCompletePickup(p.id)}>
+                    Complete
+                  </button>
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
+
+        <div className="column completed-column">
+          <h2>Completed Pickups</h2>
+          {completedPickups.length === 0 ? (
+            <p>No completed pickups</p>
+          ) : (
+            <ul>
+              {completedPickups.map(p => (
+                <li key={p.id}>
+                  {p.name} – {p.pickupTime}
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
       </div>
-    </div>
+    </>
   );
-};
-
-export default PickupScheduler;
+}
