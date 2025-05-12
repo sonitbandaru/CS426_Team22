@@ -1,14 +1,16 @@
 import { foodGroupsElem, dietsElem, allergiesElem, typeOfCuisinesElem, servesElem } from "../../database/Categories"
-import { meals } from "../../database/Donations"
 import { useState } from "react"
 import MealElem from "./MealElem"
 
+const MEAL_SERVICE_URL = "http://localhost:3000/"
+
 export default function SearchEngine() {
-    const [filteredMeals, setFilteredMeals] = useState(meals)
+
+    const [filteredMeals, setFilteredMeals] = useState([])
 
     const filteredMealsElem = filteredMeals.map(filteredMeal => <MealElem meal={filteredMeal} cart={false} />)
 
-    function searchMeal(data: FormData) {
+    async function searchMeal(data: FormData) {
         const search = String(data.get('search')).toLowerCase()
         const foodGroup = String(data.get('foodGroup'))
         const diet = String(data.get('diet'))
@@ -16,12 +18,18 @@ export default function SearchEngine() {
         const typeOfCuisine = String(data.get('typeOfCuisine'))
         const serve = Number(data.get('serve'))
 
-        let filtered = meals.filter(meal => search === '' ? true : meal.mealName.toLowerCase().includes(search))
-        filtered = filtered.filter(meal => foodGroup === '' ? true : meal.foodGroup === foodGroup)
-        filtered = filtered.filter(meal => diet === '' ? true : meal.diet === diet)
-        filtered = filtered.filter(meal => allergy === '' ? true : meal.allergies === allergy)
-        filtered = filtered.filter(meal => typeOfCuisine === '' ? true : meal.typeOfCuisine === typeOfCuisine)
-        filtered = filtered.filter(meal => serve === 0 ? true : meal.serves === serve)
+        const query = new URLSearchParams({mealName: search, foodGroup: foodGroup, diet: diet, allergies: allergy, typeOfCuisine: typeOfCuisine, serves: String(serve)})
+
+        const getMealRes = await fetch(`${MEAL_SERVICE_URL}?${query}`, {
+            method: "GET",
+        });
+
+        let filtered = []
+        if (!getMealRes.ok) {
+            alert(`Search not successful. Try again.`)
+        } else {
+            filtered = await getMealRes.json()
+        }
 
         setFilteredMeals(filtered)
     }

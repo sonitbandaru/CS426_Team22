@@ -1,9 +1,9 @@
 import { foodGroupsElem, dietsElem, allergiesElem, typeOfCuisinesElem, servesElem } from "../database/Categories"
-import { meals } from "../database/Donations"
-import "../styles/DonationForm.css"; 
+import "../styles/DonationForm.css";
 
-function addMeal(data: FormData) {
-    // Also add image eventually with backend implementation
+const MEAL_SERVICE_URL = "http://localhost:3000/"
+
+async function addMeal(data: FormData) {
     const mealName = String(data.get('mealName'))
     const donor = String(data.get('donor'))
     const foodGroup = String(data.get('foodGroup'))
@@ -12,7 +12,15 @@ function addMeal(data: FormData) {
     const typeOfCuisine = String(data.get('typeOfCuisine'))
     const serve = Number(data.get('serve'))
 
-    meals.push({image: '', mealName: mealName, donor: donor, foodGroup: foodGroup, diet: diet, allergies: allergy, typeOfCuisine: typeOfCuisine, serves: serve})
+    const addMealRes = await fetch(MEAL_SERVICE_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({image: '', mealName: mealName, donor: donor, foodGroup: foodGroup, diet: diet, allergies: allergy, typeOfCuisine: typeOfCuisine, serves: serve})
+    });
+
+    if (!addMealRes.ok) {
+        alert(`${mealName} not stored. Try again.`)
+    }
 }
 
 export default function DonationForm() {
