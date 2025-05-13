@@ -1,0 +1,15 @@
+version: '3.8'
+services:
+  scheduler:
+    build:
+      context: ./backend/scheduler-service
+    ports:
+      - "4000:4000"
+  frontend:
+    build:
+      context: ./surplus
+    command: npm run dev
+    ports:
+      - "3000:3000"
+    depends_on:
+      - scheduler
